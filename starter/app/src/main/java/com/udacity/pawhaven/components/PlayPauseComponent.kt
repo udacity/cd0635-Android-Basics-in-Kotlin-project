@@ -15,6 +15,10 @@ class PlayPauseComponent @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
+    companion object {
+        private var activeComponent: PlayPauseComponent? = null
+    }
+
     private val icon: ImageView
 
     private var isPlaying: Boolean = false
@@ -41,20 +45,32 @@ class PlayPauseComponent @JvmOverloads constructor(
      * If a sound was playing, it is stopped.
      */
     fun setSound(@RawRes soundResId: Int) {
-        if (isPlaying) {
-            audioPlayer?.stop()
-            isPlaying = false
-        }
-
+        forceStop()
         this.soundResId = soundResId
         updateIcon()
     }
 
+    private fun forceStop() {
+        if (!isPlaying) return
+
+        audioPlayer.stop()
+        isPlaying = false
+        if (activeComponent == this) {
+            activeComponent = null
+        }
+        updateIcon()
+    }
+
     private fun toggle() {
-        val player = audioPlayer ?: return
+        val player = audioPlayer
         if (soundResId == 0) return
 
         if (!isPlaying) {
+            // Stop any other active component
+            activeComponent?.forceStop()
+
+            activeComponent = this
+
             isPlaying = true
             updateIcon()
 

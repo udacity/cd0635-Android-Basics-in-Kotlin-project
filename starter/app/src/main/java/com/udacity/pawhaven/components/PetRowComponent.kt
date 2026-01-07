@@ -1,6 +1,7 @@
 package com.udacity.pawhaven.components
 
 import android.content.Context
+import android.opengl.Visibility
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -16,22 +17,13 @@ class PetRowComponent @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private val petImage: ImageView
-    private val petName: TextView
-    private val petAge: TextView
-    private val playButton: PlayPauseComponent
-
     init {
         orientation = VERTICAL
 
         // Inflate the row layout into this custom view
         LayoutInflater.from(context).inflate(R.layout.view_pet_row, this, true)
 
-        // Grab child views
-        petImage = findViewById(R.id.petImage)
-        petName = findViewById(R.id.petName)
-        petAge = findViewById(R.id.petAge)
-        playButton = findViewById(R.id.playButton)
+        //TODO Handle View Binding (findViewById) including the PlayPauseComponent
 
     }
 

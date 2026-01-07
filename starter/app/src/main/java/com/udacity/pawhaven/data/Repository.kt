@@ -9,17 +9,17 @@ internal object Repository {
         newVolunteer("Marie", "Dupont", 26)
     )
 
-
-    // Replace later with your real model/persistence
-   val pets = listOf(
-        Dog("1", "Bella", 2),
-       // TODO Uncomment on these animals once these classes are added.
-//        Cat("2", "Max", 3),
-//        Elephant("3", "Charlie", 5),
-//        Bird("4", "Cindy", 4),
-//        Lion("5", "Darrel", 4),
-//        Parrot("6", "Parry", 1),
+    val pets = mutableListOf<Animal>(
+        Dog("Bella", 2)
+        //TODO Uncomment these to have more animals
+//        Cat("Max", 3),
+//        Elephant( "Charlie", 5),
+//        Bird("Cindy", 4),
+//        Lion("Darrel", 4),
+//        Parrot( "Parry", 1),
         )
+
+    var user : Person? = null
 
     fun getPetById(id: String): Animal? {
         return pets.find { it.id == id }

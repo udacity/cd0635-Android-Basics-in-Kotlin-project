@@ -4,50 +4,33 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import com.udacity.pawhaven.R
 
-sealed class AnimalType(
+
+enum class AnimalType(
     val label: String,
     @DrawableRes val defaultIconRes: Int,
     @RawRes val defaultSoundRes: Int
 ) {
-    data object DogType : AnimalType("Dog", R.drawable.ic_dog, R.raw.dog_bark)
-    // Add more sealed class animals
+    DOG("Dog", R.drawable.ic_dog, R.raw.dog_bark),
+    CAT("Cat", R.drawable.ic_cat, R.raw.cat_meow),
+    PARROT("Parrot", R.drawable.ic_parrot, R.raw.parrot_chirp),
+    ELEPHANT("Elephant", R.drawable.ic_elephant, R.raw.elephant_trumpet),
+    LION("Lion", R.drawable.ic_lion, R.raw.lion_roar),
+    BIRD("Bird", R.drawable.ic_bird, R.raw.bird_chirp);
 
-
-    init {
-        register(this)
-    }
+    // TODO Feel Free to add other animal types.
 
     fun defaultDescription(name: String): String =
         "$name is a cheerful ${label.lowercase()}."
 
-
     fun createAnimal(
-        id: String,
         name: String,
         age: Int,
-        description: String = DogType.defaultDescription(name),
-        @DrawableRes imageRes: Int = DogType.defaultIconRes,
-        @RawRes soundRes: Int = DogType.defaultSoundRes
-    ) : Animal {
-        return when (this) {
-            DogType -> Dog(id, name, age, description, imageRes, soundRes)
-           //TODO add more sealed classes
-
+        description: String = defaultDescription(name),
+        @DrawableRes imageRes: Int = defaultIconRes,
+        @RawRes soundRes: Int = defaultSoundRes
+    ): Animal =
+        when (this) {
+            DOG -> Dog(name, age, description, imageRes, soundRes)
+            else -> TODO()
         }
-    }
-
-
-    companion object {
-        private val registry = mutableListOf<AnimalType>()
-
-        private fun register(type: AnimalType) {
-            registry.add(type)
-        }
-
-
-        /** Public, read-only list */
-        val all: List<AnimalType>
-            get() = registry.toList()
-    }
-
 }

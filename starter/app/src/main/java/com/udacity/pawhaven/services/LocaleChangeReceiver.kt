@@ -10,8 +10,9 @@ class LocaleChangeReceiver(
 ) : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        // TODO accept Intent.ACTION_LOCALE_CHANGED
-        // Call listener.onLocaleChanged()
+        if (intent?.action == Intent.ACTION_LOCALE_CHANGED) {
+            listener.onLocaleChanged()
+        }
     }
 }
 

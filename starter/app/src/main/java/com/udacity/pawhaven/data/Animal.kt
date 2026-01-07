@@ -1,29 +1,31 @@
 package com.udacity.pawhaven.data
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
+import kotlinx.parcelize.Parcelize
+import java.util.UUID
+
 
 abstract class Animal(
-    val id: String,
-    val name: String,
-    val age: Int,
-
-    val description: String,
-    val imageRes: Int,
-    val soundRes: Int
-) {
-    abstract val type: AnimalType
+    open val name: String,
+    open val age: Int,
+    open val description: String,
+    open val imageRes: Int,
+    open val soundRes: Int
+) : Parcelable {
+    val id: String = UUID.randomUUID().toString()
 }
 
 
+@Parcelize
 class Dog(
-    id: String,
-    name: String,
-    age: Int,
-    description: String = AnimalType.DogType.defaultDescription(name),
-    @DrawableRes imageRes: Int = AnimalType.DogType.defaultIconRes,
-    @RawRes soundRes: Int = AnimalType.DogType.defaultSoundRes
-) : Animal(id, name, age, description, imageRes, soundRes) {
-    override val type: AnimalType = AnimalType.DogType
-}
-// TODO add Cat, Lion, Elephant, Parrot, Bird
+    override val name: String,
+    override val age: Int,
+    override val description: String = AnimalType.DOG.defaultDescription(name),
+    @DrawableRes override val imageRes: Int = AnimalType.DOG.defaultIconRes,
+    @RawRes override val soundRes: Int = AnimalType.DOG.defaultSoundRes
+) : Animal(name, age, description, imageRes, soundRes), Parcelable
+
+//TODO Add other animals
+
